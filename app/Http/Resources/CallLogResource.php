@@ -14,6 +14,17 @@ class CallLogResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return [
+            'id' => $this->id,
+            'called_user' => $this->called_user,
+            'country_network' => $this->country_network,
+            'caller_id' => $this->caller_id,
+            'duration' => $this->duration,
+            'cost_USD' => $this->cost_euro * 1.08,
+            'date' => $this->date,
+            'status' => $this->status,
+            'registered_number' => $this->user->registered_number
+
+        ];
     }
 }
