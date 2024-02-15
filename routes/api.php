@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ActionController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CallLogController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -18,10 +19,20 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
+
 });
 
-Route::post('populate-users', [ActionController::class, 'populateUser']);
+    Route::middleware([
+        'auth:sanctum',
+    ])->group(function () {
+        Route::post('populate-users', [ActionController::class, 'populateUser']);
 
-Route::get('populate-database', [ActionController::class,'populateDataBase']);
+        Route::get('populate-database', [ActionController::class,'populateDataBase']);
 
-Route::get('fetch-logs', [CallLogController::class, 'index']);
+        Route::get('fetch-logs', [CallLogController::class, 'index']);
+    });
+
+
+Route::post('login', [AuthController::class, 'login']);
+
+
