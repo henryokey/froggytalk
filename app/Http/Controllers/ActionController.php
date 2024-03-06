@@ -38,8 +38,9 @@ class ActionController extends Controller
     public function populateDataBase() : JsonResponse
     {
         /** @var User $user */
-        $users = User::get();
+        $users = User::whereNull('email')->get();
 
+        dd($users);
         $users->each(function($item){
             $code = $this->action->fetchUserEncryptionCode($item);
             $user_records = $this->action->fetchUserRecords($code);

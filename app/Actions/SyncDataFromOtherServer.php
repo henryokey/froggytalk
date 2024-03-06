@@ -38,6 +38,7 @@ class SyncDataFromOtherServer {
 
     public function fetchUserEncryptionCode(User $user) : mixed
     {
+         
         return  $this->apiService->fetchEncrytedUserCode($user->registered_number);
     }
 
@@ -53,7 +54,7 @@ class SyncDataFromOtherServer {
 
             $user = User::where('registered_number', $item['User'])->first();
             If(!CallLog::where('date', $item['Date'])->where('user_id', $user->id)->first()){
-                
+
                 CallLog::create(CallLogDto::create($item)->toArray());
             }
 
